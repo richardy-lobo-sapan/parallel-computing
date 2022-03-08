@@ -1,0 +1,33 @@
+/*
+Program ini menghitung integral dari fungsi
+                  4/(1+x*x)
+
+dari 0 ke 1 secara numerik. Nilai integralnya = pi.
+Program ini merupakan versi sequential. Program
+menggunakan timer dari openmp
+*/
+
+#include <stdio.h>
+#include <omp.h>
+static long num_steps = 100000000;
+double step;
+int main ()
+{
+	  int i;
+	  double x, pi, sum = 0.0;
+	  double start_time, run_time;
+
+	  step = 1.0/(double) num_steps;
+
+
+	  start_time = omp_get_wtime();
+
+	  for (i=1;i<= num_steps; i++){
+		  x = (i-0.5)*step;
+		  sum = sum + 4.0/(1.0+x*x);
+	  }
+
+	  pi = step * sum;
+	  run_time = omp_get_wtime() - start_time;
+	  printf("\n pi with %ld steps is %lf in %lf seconds\n ",num_steps,pi,run_time);
+}
